@@ -24,12 +24,12 @@ echo import org.example.common.readFile >> %code_file_name%
 echo: >> %code_file_name%
 echo fun main() { >> %code_file_name%
 echo     val lines = readFile("\\year%year%\\day%day%\\input.txt") >> %code_file_name%
-echo     val day%day% = Day9() >> %code_file_name%
+echo     val day%day% = Day%day%() >> %code_file_name%
 echo     println(day%day%.part1(lines)) >> %code_file_name%
 echo     println(day%day%.part2(lines)) >> %code_file_name%
 echo } >> %code_file_name%
 echo: >> %code_file_name%
-echo class Day9 { >> %code_file_name%
+echo class Day%day% { >> %code_file_name%
 echo     fun part1(lines: List^<String^>): Int { >> %code_file_name%
 echo         return 0 >> %code_file_name%
 echo     } >> %code_file_name%
