@@ -1,12 +1,11 @@
-package org.example.aoc.year2023.day2
+package org.example.aoc.year2023.day02
 
 import org.example.common.readFile
 import kotlin.math.max
-import kotlin.math.min
 
 fun main() {
 
-    val lines = readFile("\\year2023\\day2\\input.txt")
+    val lines = readFile("\\year2023\\day02\\input.txt")
     val day2 = Day2()
     println(day2.part1(lines))
     println(day2.part2(lines))

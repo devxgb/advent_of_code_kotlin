@@ -1,7 +1,7 @@
-package org.example.aoc.year2023.day7
+package org.example.aoc.year2023.day07
 
-import org.example.aoc.year2023.day7.Hand.Companion.sortedWithJokerOrder
-import org.example.aoc.year2023.day7.HandType.*
+import org.example.aoc.year2023.day07.Hand.Companion.sortedWithJokerOrder
+import org.example.aoc.year2023.day07.HandType.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

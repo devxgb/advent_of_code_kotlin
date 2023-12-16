@@ -1,12 +1,12 @@
-package org.example.aoc.year2023.day5
+package org.example.aoc.year2023.day05
 
-import org.example.aoc.year2023.day5.LongRange.Companion.sortAndMerge
-import org.example.aoc.year2023.day5.RangedMapping.Companion.map
-import org.example.aoc.year2023.day5.RangedMapping.Companion.mapOrSelf
+import org.example.aoc.year2023.day05.LongRange.Companion.sortAndMerge
+import org.example.aoc.year2023.day05.RangedMapping.Companion.map
+import org.example.aoc.year2023.day05.RangedMapping.Companion.mapOrSelf
 import org.example.common.readFile
 
 fun main() {
-    val lines = readFile("\\year2023\\day5\\input.txt")
+    val lines = readFile("\\year2023\\day05\\input.txt")
     val day5 = Day5()
     println(day5.part1(lines))
     println(day5.part2(lines))

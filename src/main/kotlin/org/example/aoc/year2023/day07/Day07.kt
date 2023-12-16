@@ -1,12 +1,12 @@
-package org.example.aoc.year2023.day7
+package org.example.aoc.year2023.day07
 
-import org.example.aoc.year2023.day7.Hand.Companion.sortedWithJokerOrder
-import org.example.aoc.year2023.day7.HandType.*
+import org.example.aoc.year2023.day07.Hand.Companion.sortedWithJokerOrder
+import org.example.aoc.year2023.day07.HandType.*
 import org.example.common.readFile
 import kotlin.Comparator
 
 fun main() {
-    val lines = readFile("\\year2023\\day7\\input.txt")
+    val lines = readFile("\\year2023\\day07\\input.txt")
     val day7 = Day7()
     println(day7.part1(lines))
     println(day7.part2(lines))

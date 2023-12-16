@@ -1,10 +1,10 @@
-package org.example.aoc.year2023.day3
+package org.example.aoc.year2023.day03
 
 import org.example.common.readFile
 
 
 fun main() {
-    val lines = readFile("\\year2023\\day3\\input.txt")
+    val lines = readFile("\\year2023\\day03\\input.txt")
     val day3AlternateVisualization = Day3AlternateVisualization()
     println(day3AlternateVisualization.part1(lines))
     println(day3AlternateVisualization.part2(lines))

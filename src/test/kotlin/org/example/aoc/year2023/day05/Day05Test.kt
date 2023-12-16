@@ -1,15 +1,15 @@
-package org.example.aoc.year2023.day5
+package org.example.aoc.year2023.day05
 
-import org.example.aoc.year2023.day5.LongRange.Companion.sortAndMerge
-import org.example.aoc.year2023.day5.RangedMapping.Companion.map
-import org.example.aoc.year2023.day5.RangedMapping.Companion.mapOrSelf
+import org.example.aoc.year2023.day05.LongRange.Companion.sortAndMerge
+import org.example.aoc.year2023.day05.RangedMapping.Companion.map
+import org.example.aoc.year2023.day05.RangedMapping.Companion.mapOrSelf
 import org.example.common.readTestFile
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-class Day5Test {
+class Day05Test {
 
-    private val lines = readTestFile("\\year2023\\day5\\test_input.txt")
+    private val lines = readTestFile("\\year2023\\day05\\test_input.txt")
     private val day5 = Day5()
 
     @Test

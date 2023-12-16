@@ -1,10 +1,10 @@
-package org.example.aoc.year2023.day4
+package org.example.aoc.year2023.day04
 
 import org.example.common.readFile
 import kotlin.math.pow
 
 fun main() {
-    val lines = readFile("\\year2023\\day4\\input.txt")
+    val lines = readFile("\\year2023\\day04\\input.txt")
     val day4 = Day4()
     println(day4.part1(lines))
     println(day4.part2(lines))
