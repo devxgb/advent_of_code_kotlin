@@ -31,11 +31,11 @@ echo }>> %code_file_name%
 echo:>> %code_file_name%
 echo class Day%day% {>> %code_file_name%
 echo     fun part1(lines: List^<String^>): Int {>> %code_file_name%
-echo         return 0>> %code_file_name%
+echo         return ^0>> %code_file_name%
 echo     }>> %code_file_name%
 echo:>> %code_file_name%
 echo     fun part2(lines: List^<String^>): Int {>> %code_file_name%
-echo         return 0>> %code_file_name%
+echo         return ^0>> %code_file_name%
 echo     }>> %code_file_name%
 echo }>> %code_file_name%
 @REM ###################################################################################################################
