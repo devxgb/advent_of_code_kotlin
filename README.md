@@ -3,8 +3,8 @@
 <br/>
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/asset/Kotlin-Full-Color-Logo-on-White-RGB.svg">
-  <source media="(prefers-color-scheme: light)" srcset="/asset/Kotlin-Full-Color-Logo-on-Black-RGB.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="/asset/Kotlin-Full-Color-Logo-on-Black-RGB.svg">
+  <source media="(prefers-color-scheme: light)" srcset="/asset/Kotlin-Full-Color-Logo-on-White-RGB.svg">
   <img alt="Kotlin logo" src="/asset/Kotlin-Full-Color-Logo-on-White-RGB.svg" width="256">
 </picture>
 
