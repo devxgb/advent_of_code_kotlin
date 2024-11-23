@@ -10,13 +10,8 @@ fun main() {
 }
 
 class Day6 {
-    fun part1(lines: List<String>): Int {
-        return parsePart1(lines)
-            .map { (raceTime, recordDistance) ->
-                calculateNumberOfWin(raceTime.toLong(), recordDistance.toLong())
-            }
-            .reduce(Int::times)
-    }
+    fun part1(lines: List<String>): Int =
+      parsePart1(lines).map { (raceTime, recordDistance) -> calculateNumberOfWin(raceTime.toLong(), recordDistance.toLong()) }.reduce(Int::times)
 
     fun part2(lines: List<String>): Int {
         val (raceTime, recordDistance) = parsePart2(lines)
@@ -28,8 +23,7 @@ class Day6 {
         val raceTimes = lines[0].split(":")[1].trim().split(" +".toRegex()).map { it.toInt() }
         val recordDistances = lines[1].split(":")[1].trim().split(" +".toRegex()).map { it.toInt() }
         require(raceTimes.size == recordDistances.size)
-        return IntRange(0, raceTimes.size-1)
-            .map { raceTimes[it] to recordDistances[it] }
+        return IntRange(0, raceTimes.size - 1).map { raceTimes[it] to recordDistances[it] }
     }
 
     fun parsePart2(lines: List<String>): Pair<Long, Long> {
@@ -46,10 +40,6 @@ class Day6 {
         return speed * timeToTravel
     }
 
-    fun calculateNumberOfWin(raceTime: Long, recordDistance: Long): Int {
-        return LongRange(1, raceTime - 1L)
-            .map { buttonPressTime -> calculateDistanceTravelled(raceTime, buttonPressTime) }
-            .count { distance -> distance > recordDistance }
-    }
-
+    fun calculateNumberOfWin(raceTime: Long, recordDistance: Long): Int =
+      LongRange(1, raceTime - 1L).map { buttonPressTime -> calculateDistanceTravelled(raceTime, buttonPressTime) }.count { distance -> distance > recordDistance }
 }

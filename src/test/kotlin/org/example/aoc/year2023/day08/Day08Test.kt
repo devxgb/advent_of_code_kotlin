@@ -1,10 +1,10 @@
 package org.example.aoc.year2023.day08
 
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.example.aoc.year2023.day08.Instruction.*
 import org.example.common.readTestFile
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class Day08Test {
 
@@ -58,7 +58,7 @@ class Day08Test {
         assertEquals(listOf(LEFT, LEFT, RIGHT), day8.parseInstructions(lines2))
     }
 
-    private fun assertContainsEdge(graph: Graph, from: String, toLeft:String, toRight: String) {
+    private fun assertContainsEdge(graph: Graph, from: String, toLeft: String, toRight: String) {
         assertTrue(graph.containsEdgeLeft(from, toLeft), "Expected a left-edge from $from to $toLeft")
         assertTrue(graph.containsEdgeRight(from, toRight), "Expected a right-edge from $from to $toRight")
     }

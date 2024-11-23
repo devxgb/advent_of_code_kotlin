@@ -1,8 +1,8 @@
 package org.example.aoc.year2023.day03
 
+import kotlin.test.assertEquals
 import org.example.common.readTestFile
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 class Day03AlternateVisualizationTest {
     private val lines = readTestFile("\\year2023\\day03\\test_input.txt")

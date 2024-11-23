@@ -34,17 +34,16 @@ class Day5 {
 
         return seeds.minOfOrNull { seed ->
             mapSeedToLocation(
-                seed = seed,
-                seedToSoil = seedToSoil,
-                soilToFertilizer = soilToFertilizer,
-                fertilizerToWater = fertilizerToWater,
-                waterToLight = waterToLight,
-                lightToTemperature = lightToTemperature,
-                temperatureToHumidity = temperatureToHumidity,
-                humidityToLocation = humidityToLocation
+              seed = seed,
+              seedToSoil = seedToSoil,
+              soilToFertilizer = soilToFertilizer,
+              fertilizerToWater = fertilizerToWater,
+              waterToLight = waterToLight,
+              lightToTemperature = lightToTemperature,
+              temperatureToHumidity = temperatureToHumidity,
+              humidityToLocation = humidityToLocation,
             )
-        }
-            ?: throw IllegalArgumentException()
+        } ?: throw IllegalArgumentException()
     }
 
     fun part2(lines: List<String>): Long {
@@ -57,18 +56,17 @@ class Day5 {
         val temperatureToHumidity = parseTemperatureToHumidity(lines)
         val humidityToLocation = parseHumidityToLocation(lines)
 
-
-        return seedRanges.sortAndMerge()
-            .let { seedToSoil.map(it) }
-            .let { soilToFertilizer.map(it) }
-            .let { fertilizerToWater.map(it) }
-            .let { waterToLight.map(it) }
-            .let { lightToTemperature.map(it) }
-            .let { temperatureToHumidity.map(it) }
-            .let { humidityToLocation.map(it) }
-            .minOrNull()
-            ?.start
-            ?:throw IllegalArgumentException()
+        return seedRanges
+          .sortAndMerge()
+          .let { seedToSoil.map(it) }
+          .let { soilToFertilizer.map(it) }
+          .let { fertilizerToWater.map(it) }
+          .let { waterToLight.map(it) }
+          .let { lightToTemperature.map(it) }
+          .let { temperatureToHumidity.map(it) }
+          .let { humidityToLocation.map(it) }
+          .minOrNull()
+          ?.start ?: throw IllegalArgumentException()
     }
 
     fun parseSeeds(lines: List<String>): List<Long> {
@@ -78,10 +76,7 @@ class Day5 {
     fun parseSeedAsRange(lines: List<String>): List<LongRange> {
         val splitLines = lines[0].split(":")[1].trim().split(" ").map { it.toLong() }
         require(splitLines.size.mod(2) == 0)
-        return splitLines.withIndex()
-            .groupBy { it.index / 2 }
-            .values
-            .map { LongRange(it[0].value, it[1].value) }
+        return splitLines.withIndex().groupBy { it.index / 2 }.values.map { LongRange(it[0].value, it[1].value) }
     }
 
     fun parseSeedToSoil(lines: List<String>): List<RangedMapping> {
@@ -112,59 +107,46 @@ class Day5 {
         return parseMapping(lines, str_humidity_to_location)
     }
 
-
-    private fun parseMapping(
-        lines: List<String>,
-        firstString: String,
-        lastString: String? = null
-    ): List<RangedMapping> {
+    private fun parseMapping(lines: List<String>, firstString: String, lastString: String? = null): List<RangedMapping> {
         val fromIndex = lines.indexOfFirst { it == firstString } + 1
         val toIndex = if (lastString == null) lines.size else lines.indexOfFirst { it == lastString } - 1
         require(fromIndex in 0..toIndex)
         require(toIndex in fromIndex + 1..lines.size)
 
-        return lines.subList(fromIndex, toIndex)
-            .map { line ->
-                val split = line.split(" ").map { it.toLong() }
-                require(split.size == 3)
-                RangedMapping(destination = split[0], source = split[1], size = split[2])
-            }
+        return lines.subList(fromIndex, toIndex).map { line ->
+            val split = line.split(" ").map { it.toLong() }
+            require(split.size == 3)
+            RangedMapping(destination = split[0], source = split[1], size = split[2])
+        }
     }
 
     fun mapSeedToLocation(
-        seed: Long,
-        seedToSoil: List<RangedMapping>,
-        soilToFertilizer: List<RangedMapping>,
-        fertilizerToWater: List<RangedMapping>,
-        waterToLight: List<RangedMapping>,
-        lightToTemperature: List<RangedMapping>,
-        temperatureToHumidity: List<RangedMapping>,
-        humidityToLocation: List<RangedMapping>
+      seed: Long,
+      seedToSoil: List<RangedMapping>,
+      soilToFertilizer: List<RangedMapping>,
+      fertilizerToWater: List<RangedMapping>,
+      waterToLight: List<RangedMapping>,
+      lightToTemperature: List<RangedMapping>,
+      temperatureToHumidity: List<RangedMapping>,
+      humidityToLocation: List<RangedMapping>,
     ): Long {
         return seed
-            .let { seedToSoil.mapOrSelf(it) }
-            .let { soilToFertilizer.mapOrSelf(it) }
-            .let { fertilizerToWater.mapOrSelf(it) }
-            .let { waterToLight.mapOrSelf(it) }
-            .let { lightToTemperature.mapOrSelf(it) }
-            .let { temperatureToHumidity.mapOrSelf(it) }
-            .let { humidityToLocation.mapOrSelf(it) }
+          .let { seedToSoil.mapOrSelf(it) }
+          .let { soilToFertilizer.mapOrSelf(it) }
+          .let { fertilizerToWater.mapOrSelf(it) }
+          .let { waterToLight.mapOrSelf(it) }
+          .let { lightToTemperature.mapOrSelf(it) }
+          .let { temperatureToHumidity.mapOrSelf(it) }
+          .let { humidityToLocation.mapOrSelf(it) }
     }
 }
 
-data class RangedMapping(
-    val destination: Long,
-    val source: Long,
-    val size: Long
-) {
+data class RangedMapping(val destination: Long, val source: Long, val size: Long) {
 
     companion object {
         fun List<RangedMapping>.map(num: Long): Long? {
-            return this.fold(null) { previous: Long?, mapping: RangedMapping ->
-                previous ?: mapping.map(num)
-            }
+            return this.fold(null) { previous: Long?, mapping: RangedMapping -> previous ?: mapping.map(num) }
         }
-
 
         fun List<RangedMapping>.mapOrSelf(num: Long): Long {
             return this.map(num) ?: num
@@ -172,16 +154,16 @@ data class RangedMapping(
 
         fun List<RangedMapping>.map(ranges: List<LongRange>): List<LongRange> {
             return this.fold(ranges.map { it to false }) { acc, mapping ->
-                acc.flatMap { (range, isMapped) ->
-                    if (isMapped) {
-                        listOf(range to true)
-                    } else {
-                        mapping.map(range)
-                    }
-                }
-            }
-                .map { it.first }
-                .sortAndMerge()
+                  acc.flatMap { (range, isMapped) ->
+                      if (isMapped) {
+                          listOf(range to true)
+                      } else {
+                          mapping.map(range)
+                      }
+                  }
+              }
+              .map { it.first }
+              .sortAndMerge()
         }
     }
 
@@ -206,47 +188,42 @@ data class RangedMapping(
     }
 
     fun map(range: LongRange): List<Pair<LongRange, Boolean>> {
-        return range.splitBy(LongRange(source, size))
-            .map {
-                if (this.contains(it)) {
-                    LongRange(this.mapOrSelf(it.start), it.size) to true
-                } else {
-                    it to false
-                }
+        return range.splitBy(LongRange(source, size)).map {
+            if (this.contains(it)) {
+                LongRange(this.mapOrSelf(it.start), it.size) to true
+            } else {
+                it to false
             }
+        }
     }
 }
 
-class LongRange(
-    val start: Long,
-    val size: Long
-) : Comparable<LongRange> {
+class LongRange(val start: Long, val size: Long) : Comparable<LongRange> {
 
     val end: Long = start + size - 1
 
-    private val comparator: Comparator<LongRange> =
-        Comparator.comparingLong<LongRange?> { it.start }.thenComparingLong { it.end }
+    private val comparator: Comparator<LongRange> = Comparator.comparingLong<LongRange?> { it.start }.thenComparingLong { it.end }
 
     companion object {
         fun List<LongRange>.sortAndMerge(): List<LongRange> {
             return this.sorted()
-                .fold(ArrayDeque<LongRange>(this.size)) { stack, current ->
-                    val previous = stack.removeLastOrNull()
-                    if (previous != null) {
-                        if (previous.overlapsOrAdjacentTo(current)) {
-                            val start = previous.start
-                            val range = current.end - previous.start + 1
-                            stack.addLast(LongRange(start, range))
-                        } else {
-                            stack.addLast(previous)
-                            stack.addLast(current)
-                        }
-                    } else {
-                        stack.addLast(current)
-                    }
-                    stack
-                }
-                .toList()
+              .fold(ArrayDeque<LongRange>(this.size)) { stack, current ->
+                  val previous = stack.removeLastOrNull()
+                  if (previous != null) {
+                      if (previous.overlapsOrAdjacentTo(current)) {
+                          val start = previous.start
+                          val range = current.end - previous.start + 1
+                          stack.addLast(LongRange(start, range))
+                      } else {
+                          stack.addLast(previous)
+                          stack.addLast(current)
+                      }
+                  } else {
+                      stack.addLast(current)
+                  }
+                  stack
+              }
+              .toList()
         }
     }
 
@@ -293,35 +270,16 @@ class LongRange(
             listOf(this)
         } else if (!this.contains(other)) {
             if (this < other) {
-                listOf(
-                    LongRange(this.start, other.start - this.start),
-                    LongRange(other.start, this.end - other.start + 1)
-                )
+                listOf(LongRange(this.start, other.start - this.start), LongRange(other.start, this.end - other.start + 1))
             } else {
-                listOf(
-                    LongRange(this.start, other.end - this.start + 1),
-                    LongRange(other.end + 1, this.end - other.end)
-                )
+                listOf(LongRange(this.start, other.end - this.start + 1), LongRange(other.end + 1, this.end - other.end))
             }
-        } else if(this.start == other.start) {
-            listOf(
-                LongRange(this.start, other.end-this.start+1),
-                LongRange(other.end + 1, this.end - other.end)
-            )
-        } else if(this.end == other.end) {
-            listOf(
-                LongRange(this.start, other.start-this.start),
-                LongRange(other.start, this.end - other.start+1)
-            )
-        }
-        else {
-            listOf(
-                LongRange(this.start, other.start - this.start),
-                LongRange(other.start, other.size),
-                LongRange(other.end + 1, this.end - other.end)
-            )
+        } else if (this.start == other.start) {
+            listOf(LongRange(this.start, other.end - this.start + 1), LongRange(other.end + 1, this.end - other.end))
+        } else if (this.end == other.end) {
+            listOf(LongRange(this.start, other.start - this.start), LongRange(other.start, this.end - other.start + 1))
+        } else {
+            listOf(LongRange(this.start, other.start - this.start), LongRange(other.start, other.size), LongRange(other.end + 1, this.end - other.end))
         }
     }
-
 }
-

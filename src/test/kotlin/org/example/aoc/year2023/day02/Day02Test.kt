@@ -1,13 +1,12 @@
 package org.example.aoc.year2023.day02
 
-import org.example.common.readTestFile
-import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import org.example.common.readTestFile
+import org.junit.jupiter.api.Test
 
 class Day02Test {
-
     private val lines = readTestFile("\\year2023\\day02\\test_input.txt")
     private val day2 = Day2()
 
@@ -129,7 +128,10 @@ class Day02Test {
 
     @Test
     fun gameTest15() {
-        val game = Game.fromString("Game 15: 4 green, 12 blue, 15 red; 10 blue, 18 green, 13 red; 20 blue, 6 green, 10 red; 20 red, 12 blue, 13 green; 12 blue, 17 green, 10 red; 1 red, 3 blue, 7 green")
+        val game =
+          Game.fromString(
+            "Game 15: 4 green, 12 blue, 15 red; 10 blue, 18 green, 13 red; 20 blue, 6 green, 10 red; 20 red, 12 blue, 13 green; 12 blue, 17 green, 10 red; 1 red, 3 blue, 7 green"
+          )
 
         assertEquals(15, game.id)
 

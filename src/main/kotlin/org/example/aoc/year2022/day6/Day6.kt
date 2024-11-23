@@ -5,7 +5,7 @@ import org.example.common.readFile
 fun main() {
     val string = readFile("\\year2022\\day6\\input.txt")[0]
 
-    /***** Part1 *****/
+    /** *** Part1 **** */
     val packetStart = SignalProcessor(4)
     var start: Int = 0
     for ((i, char) in string.withIndex()) {
@@ -16,7 +16,7 @@ fun main() {
     }
     println(start + 1)
 
-    /***** Part2 *****/
+    /** *** Part2 **** */
     val msgStart = SignalProcessor(14)
     for ((i, char) in string.withIndex()) {
         if (msgStart.detect(char)) {
@@ -57,6 +57,4 @@ class SignalProcessor(private val size: Int) {
         }
         return isStart
     }
-
 }
-

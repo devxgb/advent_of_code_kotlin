@@ -2,7 +2,6 @@ package org.example.aoc.year2023.day03
 
 import org.example.common.readFile
 
-
 fun main() {
     val lines = readFile("\\year2023\\day03\\input.txt")
     val day3AlternateVisualization = Day3AlternateVisualization()
@@ -14,37 +13,32 @@ fun main() {
 // Visualization stored under resources
 class Day3AlternateVisualization {
     fun part1(lines: List<String>): Int {
-//        println("Part1--------------------------------------------------")
+        //        println("Part1--------------------------------------------------")
         val engineSchematic = EngineSchematic.fromString(lines)
-//        println(engineSchematic.toString())
-//        println("-------------------------------------------------------")
+        //        println(engineSchematic.toString())
+        //        println("-------------------------------------------------------")
         engineSchematic.markAllPartNumbers()
-//        println(engineSchematic.toString())
-//        println("-------------------------------------------------------")
+        //        println(engineSchematic.toString())
+        //        println("-------------------------------------------------------")
         return engineSchematic.addAllPartNumber()
     }
 
     fun part2(lines: List<String>): Int {
-//        println("Part2--------------------------------------------------")
+        //        println("Part2--------------------------------------------------")
         val engineSchematic = EngineSchematic.fromString(lines)
-//        println(engineSchematic.toString())
-//        println("-------------------------------------------------------")
+        //        println(engineSchematic.toString())
+        //        println("-------------------------------------------------------")
         engineSchematic.markAllPartNumbers()
-//        println(engineSchematic.toString())
-//        println("-------------------------------------------------------")
+        //        println(engineSchematic.toString())
+        //        println("-------------------------------------------------------")
         engineSchematic.markAllGearRatio()
-//        println(engineSchematic.toString())
-//        println("-------------------------------------------------------")
+        //        println(engineSchematic.toString())
+        //        println("-------------------------------------------------------")
         return engineSchematic.addAllGearRatio()
     }
 }
 
-class EngineSchematic private constructor(
-    private val elements: ArrayList<ArrayList<EngineSchematicElement>>,
-    private val height: Int,
-    private val width: Int
-) {
-
+class EngineSchematic private constructor(private val elements: ArrayList<ArrayList<EngineSchematicElement>>, private val height: Int, private val width: Int) {
     companion object {
         fun fromString(lines: List<String>): EngineSchematic {
             val height = lines.size
@@ -52,11 +46,7 @@ class EngineSchematic private constructor(
             if (lines.any { it.length != width }) {
                 throw IllegalArgumentException()
             }
-            val elements = lines.map { line ->
-                line.toCharArray().map { EngineSchematicElement.fromChar(it) }
-            }
-                .map { ArrayList(it) }
-                .let { ArrayList(it) }
+            val elements = lines.map { line -> line.toCharArray().map { EngineSchematicElement.fromChar(it) } }.map { ArrayList(it) }.let { ArrayList(it) }
 
             return EngineSchematic(elements, height, width)
         }
@@ -65,7 +55,7 @@ class EngineSchematic private constructor(
     private fun markPartNumberLeft(row: Int, column: Int, marker: (Digit) -> Unit, isMarked: (Digit) -> Boolean) {
         checkRowColumn(row, column)
         if (column <= 0) {
-            //there is nothing on left side
+            // there is nothing on left side
             return
         }
         val left = elements[row][column - 1]
@@ -82,7 +72,7 @@ class EngineSchematic private constructor(
     private fun markPartNumberRight(row: Int, column: Int, marker: (Digit) -> Unit, isMarked: (Digit) -> Boolean) {
         checkRowColumn(row, column)
         if (column >= width - 1) {
-            //there is nothing on right side
+            // there is nothing on right side
             return
         }
         val right = elements[row][column + 1]
@@ -168,9 +158,7 @@ class EngineSchematic private constructor(
         return sum
     }
 
-    fun addAllPartNumber(): Int {
-        return addAllNumber(Digit::isPartNumber)
-    }
+    fun addAllPartNumber(): Int = addAllNumber(Digit::isPartNumber)
 
     private fun countSurroundingNumbers(row: Int, column: Int): Int {
         checkRowColumn(row, column)
@@ -320,7 +308,7 @@ class EngineSchematic private constructor(
             j--
         }
         j++
-        var num = 0;
+        var num = 0
         while (j < width && elements[row][j] is Digit) {
             num = num * 10 + (elements[row][j] as Digit).value
             j++
@@ -352,51 +340,51 @@ class EngineSchematic private constructor(
         }
     }
 
-    override fun toString(): String {
-        return elements.joinToString(separator = "\n") { row ->
-            row.joinToString(separator = "") { char ->
-                when (char) {
-                    is Digit -> {
-                        char.value.toString() + (if (char.isGearRatio) "G" else if (char.isPartNumber) "P" else " ")
-                    }
+    override fun toString(): String =
+      elements.joinToString(separator = "\n") { row ->
+          row.joinToString(separator = "") { char ->
+              when (char) {
+                  is Digit -> {
+                      char.value.toString() +
+                        (if (char.isGearRatio) {
+                            "G"
+                        } else if (char.isPartNumber) {
+                            "P"
+                        } else {
+                            " "
+                        })
+                  }
 
-                    is SpecialChar -> {
-                        "${char.char} "
-                    }
+                  is SpecialChar -> {
+                      "${char.char} "
+                  }
 
-                    is Empty -> {
-                        ". "
-                    }
+                  is Empty -> {
+                      ". "
+                  }
 
-                    else -> {
-                        throw IllegalArgumentException()
-                    }
-                }
-            }
-        }
-    }
+                  else -> {
+                      throw IllegalArgumentException()
+                  }
+              }
+          }
+      }
 }
 
 interface EngineSchematicElement {
     companion object {
-        fun fromChar(char: Char): EngineSchematicElement {
-            return if (char.isDigit()) {
-                Digit(char.digitToInt(), false)
-            } else if (char == '.') {
-                Empty()
-            } else {
-                SpecialChar(char)
-            }
-        }
+        fun fromChar(char: Char): EngineSchematicElement =
+          if (char.isDigit()) {
+              Digit(char.digitToInt(), false)
+          } else if (char == '.') {
+              Empty()
+          } else {
+              SpecialChar(char)
+          }
     }
 }
 
-class Digit(
-    val value: Int,
-    isPartNumber: Boolean = false,
-    isGearRatio: Boolean = false
-) : EngineSchematicElement {
-
+class Digit(val value: Int, isPartNumber: Boolean = false, isGearRatio: Boolean = false) : EngineSchematicElement {
     var isPartNumber = isPartNumber
         private set
 
@@ -412,10 +400,8 @@ class Digit(
     }
 }
 
-class Empty() : EngineSchematicElement
+class Empty : EngineSchematicElement
 
 class SpecialChar(val char: Char) : EngineSchematicElement {
-    fun isStar(): Boolean {
-        return char == '*'
-    }
+    fun isStar(): Boolean = char == '*'
 }

@@ -1,9 +1,9 @@
 package org.example.aoc.year2023.day07
 
+import kotlin.Comparator
 import org.example.aoc.year2023.day07.Hand.Companion.sortedWithJokerOrder
 import org.example.aoc.year2023.day07.HandType.*
 import org.example.common.readFile
-import kotlin.Comparator
 
 fun main() {
     val lines = readFile("\\year2023\\day07\\input.txt")
@@ -15,16 +15,12 @@ fun main() {
 class Day7 {
     fun part1(lines: List<String>): Int {
         val hands = parse(lines)
-        return hands.sorted()
-            .mapIndexed { index, hand -> (index + 1) * hand.bid }
-            .sum()
+        return hands.sorted().mapIndexed { index, hand -> (index + 1) * hand.bid }.sum()
     }
 
     fun part2(lines: List<String>): Any {
         val hands = parse(lines)
-        return hands.sortedWithJokerOrder()
-            .mapIndexed { index, hand -> (index + 1) * hand.bid }
-            .sum()
+        return hands.sortedWithJokerOrder().mapIndexed { index, hand -> (index + 1) * hand.bid }.sum()
     }
 
     fun parse(lines: List<String>): List<Hand> {
@@ -37,14 +33,7 @@ class Day7 {
     }
 }
 
-class Hand(
-    val first: Card,
-    val second: Card,
-    val third: Card,
-    val fourth: Card,
-    val fifth: Card,
-    val bid: Int
-) : Comparable<Hand> {
+class Hand(val first: Card, val second: Card, val third: Card, val fourth: Card, val fifth: Card, val bid: Int) : Comparable<Hand> {
 
     val handType: HandType
     val handTypeJoker: HandType
@@ -55,8 +44,7 @@ class Hand(
     }
 
     private fun calculateHandType(): HandType {
-        val cardGroupBy = listOf(first, second, third, fourth, fifth)
-            .groupBy { it }
+        val cardGroupBy = listOf(first, second, third, fourth, fifth).groupBy { it }
         return when {
             cardGroupBy.size == 1 && cardGroupBy.all { it.value.size == 5 } -> FIVE_OF_A_KIND
             cardGroupBy.size == 2 && cardGroupBy.all { it.value.size == 1 || it.value.size == 4 } -> FOUR_OF_A_KIND
@@ -72,8 +60,7 @@ class Hand(
     }
 
     private fun calculateHandTypeJoker(): HandType {
-        val cardGroupBy = listOf(first, second, third, fourth, fifth)
-            .groupBy { it }
+        val cardGroupBy = listOf(first, second, third, fourth, fifth).groupBy { it }
         val joker = cardGroupBy[Card.Card_J]?.size ?: 0
         return when {
             cardGroupBy.size == 1 && cardGroupBy.all { it.value.size == 5 } -> FIVE_OF_A_KIND
@@ -108,14 +95,16 @@ class Hand(
     }
 
     companion object {
-        private val comparator: Comparator<Hand> = Comparator.comparing { hand: Hand -> hand.handType }
+        private val comparator: Comparator<Hand> =
+          Comparator.comparing { hand: Hand -> hand.handType }
             .thenComparing { hand: Hand -> hand.first }
             .thenComparing { hand: Hand -> hand.second }
             .thenComparing { hand: Hand -> hand.third }
             .thenComparing { hand: Hand -> hand.fourth }
             .thenComparing { hand: Hand -> hand.fifth }
 
-        private val comparatorJoker: Comparator<Hand> = Comparator.comparing { hand: Hand -> hand.handTypeJoker }
+        private val comparatorJoker: Comparator<Hand> =
+          Comparator.comparing { hand: Hand -> hand.handTypeJoker }
             .thenComparing(Hand::first, Card.comparatorJoker)
             .thenComparing(Hand::second, Card.comparatorJoker)
             .thenComparing(Hand::third, Card.comparatorJoker)
@@ -132,11 +121,7 @@ class Hand(
     }
 
     override fun toString(): String {
-        return first.toString() +
-                second.toString() +
-                third.toString() +
-                fourth.toString() +
-                fifth.toString()
+        return first.toString() + second.toString() + third.toString() + fourth.toString() + fifth.toString()
     }
 
     override fun equals(other: Any?): Boolean {
@@ -163,7 +148,7 @@ enum class HandType {
     THREE_OF_A_KIND,
     FULL_HOUSE,
     FOUR_OF_A_KIND,
-    FIVE_OF_A_KIND
+    FIVE_OF_A_KIND,
 }
 
 enum class Card {

@@ -24,9 +24,13 @@ class Day10 {
     companion object {
         data class Position(val row: Int, val column: Int) {
             fun north(): Position = Position(row - 1, column)
+
             fun south(): Position = Position(row + 1, column)
+
             fun east(): Position = Position(row, column + 1)
+
             fun west(): Position = Position(row, column - 1)
+
             fun move(direction: Direction): Position {
                 return when (direction) {
                     NORTH -> Position(row - 1, column)
@@ -42,7 +46,8 @@ class Day10 {
         class Layout(private val elements: List<List<Element>>) {
             private val rows: Int = elements.size
             private val columns: Int = elements[0].size
-            private val startPosition: Position = elements
+            private val startPosition: Position =
+              elements
                 .mapIndexed { rowIndex, row -> rowIndex to row.indexOfFirst { it is Start } }
                 .first { (_, column) -> column != -1 }
                 .let { (row, column) -> Position(row, column) }
@@ -66,12 +71,14 @@ class Day10 {
             }
 
             fun north(position: Position): Position = position.north().also { checkOutOfBound(it) }
+
             fun south(position: Position): Position = position.south().also { checkOutOfBound(it) }
+
             fun east(position: Position): Position = position.east().also { checkOutOfBound(it) }
+
             fun west(position: Position): Position = position.west().also { checkOutOfBound(it) }
 
-            private fun isOutOfBound(position: Position): Boolean =
-                position.row < 0 || position.row > this.rows || position.column < 0 || position.column > this.columns
+            private fun isOutOfBound(position: Position): Boolean = position.row < 0 || position.row > this.rows || position.column < 0 || position.column > this.columns
 
             private fun checkOutOfBound(position: Position) {
                 if (isOutOfBound(position)) {
@@ -81,41 +88,39 @@ class Day10 {
 
             fun findLoopLength(): Int {
                 return runCatching {
-                    println("Starting North")
-                    findLoopLength(NORTH)
-                }
-                    .recoverCatching {
-                        println("Starting South")
-                        findLoopLength(SOUTH)
-                    }
-                    .recoverCatching {
-                        println("Starting East")
-                        findLoopLength(EAST)
-                    }
-                    .recoverCatching {
-                        println("Starting West")
-                        findLoopLength(WEST)
-                    }
-                    .getOrElse { throw LoopNotFoundException() }
+                      println("Starting North")
+                      findLoopLength(NORTH)
+                  }
+                  .recoverCatching {
+                      println("Starting South")
+                      findLoopLength(SOUTH)
+                  }
+                  .recoverCatching {
+                      println("Starting East")
+                      findLoopLength(EAST)
+                  }
+                  .recoverCatching {
+                      println("Starting West")
+                      findLoopLength(WEST)
+                  }
+                  .getOrElse { throw LoopNotFoundException() }
             }
 
             private fun findLoopLength(startDirection: Direction): Int {
-                val nextPosition =
-                    runCatching { tryMove(startPosition, startDirection) }.getOrElse { throw LoopNotFoundException() }
+                val nextPosition = runCatching { tryMove(startPosition, startDirection) }.getOrElse { throw LoopNotFoundException() }
                 return findLoopLengthTailRec(nextPosition, startDirection, 1)
             }
 
             private tailrec fun findLoopLengthTailRec(position: Position, direction: Direction, accumulator: Int): Int {
                 val currentElement = get(position)
-//                println("Current position : ${position}, Current Element: ${currentElement::class.simpleName}, Incoming direction: ${direction.name}")
+                //                println("Current position : ${position}, Current Element:
+                // ${currentElement::class.simpleName}, Incoming direction: ${direction.name}")
                 return when (currentElement) {
                     is Ground -> throw LoopNotFoundException()
                     is Start -> accumulator
                     is Pipe -> {
-                        val (newDirection, _) =
-                            currentElement.runCatching { turn(direction) }.getOrElse { throw LoopNotFoundException() }
-                        val newPosition =
-                            runCatching { tryMove(position, newDirection) }.getOrElse { throw LoopNotFoundException() }
+                        val (newDirection, _) = currentElement.runCatching { turn(direction) }.getOrElse { throw LoopNotFoundException() }
+                        val newPosition = runCatching { tryMove(position, newDirection) }.getOrElse { throw LoopNotFoundException() }
                         findLoopLengthTailRec(newPosition, newDirection, accumulator + 1)
                     }
                 }
@@ -128,18 +133,22 @@ class Day10 {
             fun countInside(): Int {
                 if (!isInsideMarked) {
                     runCatching {
-                        println("Starting North")
-                        traverseLoopAndMarkInside(NORTH)
-                    }.recoverCatching {
-                        println("Starting South")
-                        traverseLoopAndMarkInside(SOUTH)
-                    }.recoverCatching {
-                        println("Starting East")
-                        traverseLoopAndMarkInside(EAST)
-                    }.recoverCatching {
-                        println("Starting West")
-                        traverseLoopAndMarkInside(WEST)
-                    }.getOrElse { throw LoopNotFoundException() }
+                          println("Starting North")
+                          traverseLoopAndMarkInside(NORTH)
+                      }
+                      .recoverCatching {
+                          println("Starting South")
+                          traverseLoopAndMarkInside(SOUTH)
+                      }
+                      .recoverCatching {
+                          println("Starting East")
+                          traverseLoopAndMarkInside(EAST)
+                      }
+                      .recoverCatching {
+                          println("Starting West")
+                          traverseLoopAndMarkInside(WEST)
+                      }
+                      .getOrElse { throw LoopNotFoundException() }
                 }
                 if (!isInsideMarked) throw IllegalStateException()
                 return isInside?.flatten()?.count { it } ?: throw IllegalStateException()
@@ -147,58 +156,37 @@ class Day10 {
 
             private fun traverseLoopAndMarkInside(startDirection: Direction) {
                 if (!isInsideMarked) {
-                    val nextPosition =
-                        runCatching {
-                            tryMove(
-                                startPosition,
-                                startDirection
-                            )
-                        }.getOrElse { throw LoopNotFoundException() }
-                    val (sideToMark, isPartOfMainLoop) = traverseMainLoopTailRec(
-                        nextPosition,
-                        startDirection,
-                        TurnStack(),
-                        List(rows) { MutableList(columns) { false } })
+                    val nextPosition = runCatching { tryMove(startPosition, startDirection) }.getOrElse { throw LoopNotFoundException() }
+                    val (sideToMark, isPartOfMainLoop) = traverseMainLoopTailRec(nextPosition, startDirection, TurnStack(), List(rows) { MutableList(columns) { false } })
                     this.isMainLoopTraversed = true
                     this.isPartOfMainLoop = isPartOfMainLoop
-                    val isInside = markInsideMainLoopTailRec(
-                        nextPosition,
-                        startDirection,
-                        sideToMark,
-                        List(rows) { MutableList(columns) { false } })
+                    val isInside = markInsideMainLoopTailRec(nextPosition, startDirection, sideToMark, List(rows) { MutableList(columns) { false } })
                     this.isInsideMarked = true
                     this.isInside = isInside
                 }
             }
 
             private tailrec fun traverseMainLoopTailRec(
-                position: Position,
-                direction: Direction,
-                turnStack: TurnStack,
-                isPartOfMainLoop: List<MutableList<Boolean>>
+              position: Position,
+              direction: Direction,
+              turnStack: TurnStack,
+              isPartOfMainLoop: List<MutableList<Boolean>>,
             ): Pair<Turn, List<List<Boolean>>> {
                 val currentElement = get(position)
                 return when (currentElement) {
                     is Ground -> throw LoopNotFoundException()
                     is Start -> return turnStack.evaluate() to isPartOfMainLoop
                     is Pipe -> {
-                        val (newDirection, turn) =
-                            currentElement.runCatching { turn(direction) }.getOrElse { throw LoopNotFoundException() }
+                        val (newDirection, turn) = currentElement.runCatching { turn(direction) }.getOrElse { throw LoopNotFoundException() }
                         turnStack.push(turn)
                         isPartOfMainLoop[position.row][position.column] = true
-                        val newPosition =
-                            runCatching { tryMove(position, newDirection) }.getOrElse { throw LoopNotFoundException() }
+                        val newPosition = runCatching { tryMove(position, newDirection) }.getOrElse { throw LoopNotFoundException() }
                         traverseMainLoopTailRec(newPosition, newDirection, turnStack, isPartOfMainLoop)
                     }
                 }
             }
 
-            private tailrec fun markInsideMainLoopTailRec(
-                position: Position,
-                direction: Direction,
-                sideToMark: Turn,
-                isInside: List<MutableList<Boolean>>
-            ): List<List<Boolean>> {
+            private tailrec fun markInsideMainLoopTailRec(position: Position, direction: Direction, sideToMark: Turn, isInside: List<MutableList<Boolean>>): List<List<Boolean>> {
                 val currentElement = get(position)
                 return when (currentElement) {
                     is Ground -> throw LoopNotFoundException()
@@ -209,30 +197,28 @@ class Day10 {
                         val positionToMark1 = tryMove(position, directionToMark1)
                         markStraightLineTailRec(positionToMark1, directionToMark1, isInside)
 
-                        val (newDirection, _) =
-                            currentElement.runCatching { turn(direction) }.getOrElse { throw LoopNotFoundException() }
+                        val (newDirection, _) = currentElement.runCatching { turn(direction) }.getOrElse { throw LoopNotFoundException() }
 
                         val directionToMark2 = newDirection.turn(sideToMark)
                         val positionToMark2 = tryMove(position, directionToMark2)
                         markStraightLineTailRec(positionToMark2, directionToMark2, isInside)
-//                        println("Marking for position: $position, current element: ${currentElement::class.simpleName}, currentDirection: ${direction.name}, direction-to-mark-1: ${directionToMark1.name}, direction-to-mark-2: ${directionToMark2.name}")
+                        //                        println("Marking for position: $position, current
+                        // element: ${currentElement::class.simpleName}, currentDirection:
+                        // ${direction.name}, direction-to-mark-1: ${directionToMark1.name},
+                        // direction-to-mark-2: ${directionToMark2.name}")
 
-                        val newPosition =
-                            runCatching { tryMove(position, newDirection) }.getOrElse { throw LoopNotFoundException() }
+                        val newPosition = runCatching { tryMove(position, newDirection) }.getOrElse { throw LoopNotFoundException() }
                         markInsideMainLoopTailRec(newPosition, newDirection, sideToMark, isInside)
                     }
                 }
             }
 
-            private tailrec fun markStraightLineTailRec(
-                position: Position,
-                direction: Direction,
-                isInside: List<MutableList<Boolean>>
-            ) {
+            private tailrec fun markStraightLineTailRec(position: Position, direction: Direction, isInside: List<MutableList<Boolean>>) {
                 val currentElement = get(position)
                 return when (currentElement) {
                     is Start -> Unit
-                    is Ground, is Pipe -> {
+                    is Ground,
+                    is Pipe -> {
                         if (isPartOfMainLoop(position)) {
                             Unit
                         } else {
@@ -244,39 +230,41 @@ class Day10 {
                 }
             }
 
-
             fun printStartPosition() {
                 println("Start position: $startPosition")
             }
 
             fun visualize(scaleUp: Boolean = true, paintInsideMainLoop: Boolean = false) {
-                elements.mapIndexed { rowIndex, row ->
-                    row.mapIndexed { _, column ->
-                        when (scaleUp) {
-                            true -> when (column) {
-                                is Ground -> "     "
-                                is HorizontalPipe -> "—————"
-                                is VerticalPipe -> "  |  "
-                                is BottomRightPipe -> "  ┌——"
-                                is BottomLeftPipe -> "——┐  "
-                                is TopRightPipe -> "  └——"
-                                is TopLeftPipe -> "——┘  "
-                                is Start -> "——┼——"
-                            }
+                elements
+                  .mapIndexed { rowIndex, row ->
+                      row
+                        .mapIndexed { _, column ->
+                            when (scaleUp) {
+                                true ->
+                                  when (column) {
+                                      is Ground -> "     "
+                                      is HorizontalPipe -> "—————"
+                                      is VerticalPipe -> "  |  "
+                                      is BottomRightPipe -> "  ┌——"
+                                      is BottomLeftPipe -> "——┐  "
+                                      is TopRightPipe -> "  └——"
+                                      is TopLeftPipe -> "——┘  "
+                                      is Start -> "——┼——"
+                                  }
 
-                            false -> when (column) {
-                                is Ground -> "   "
-                                is HorizontalPipe -> "———"
-                                is VerticalPipe -> " | "
-                                is BottomRightPipe -> " ┌—"
-                                is BottomLeftPipe -> "—┐ "
-                                is TopRightPipe -> " └—"
-                                is TopLeftPipe -> "—┘ "
-                                is Start -> "—┼—"
+                                false ->
+                                  when (column) {
+                                      is Ground -> "   "
+                                      is HorizontalPipe -> "———"
+                                      is VerticalPipe -> " | "
+                                      is BottomRightPipe -> " ┌—"
+                                      is BottomLeftPipe -> "—┐ "
+                                      is TopRightPipe -> " └—"
+                                      is TopLeftPipe -> "—┘ "
+                                      is Start -> "—┼—"
+                                  }
                             }
                         }
-
-                    }
                         .mapIndexed { columnIndex, column ->
                             if (paintInsideMainLoop && isInside(rowIndex, columnIndex)) {
                                 if (scaleUp) {
@@ -289,29 +277,41 @@ class Day10 {
                             }
                         }
                         .joinToString(separator = "")
-                }
-                    .flatMap { line ->
-                        if (scaleUp.not()) {
-                            listOf(line)
-                        } else {
-                            val up = line.map {
-                                when (it) {
-                                    '|', '└', '┘', '┼' -> '|'
-                                    '■' -> '■'
-                                    else -> ' '
-                                }
-                            }.joinToString(separator = "")
-                            val down = line.map {
-                                when (it) {
-                                    '|', '┌', '┐', '┼' -> '|'
-                                    '■' -> '■'
-                                    else -> ' '
-                                }
-                            }.joinToString(separator = "")
-                            listOf(up, line, down)
-                        }
-                    }
-                    .forEach { println(it) }
+                  }
+                  .flatMap { line ->
+                      if (scaleUp.not()) {
+                          listOf(line)
+                      } else {
+                          val up =
+                            line
+                              .map {
+                                  when (it) {
+                                      '|',
+                                      '└',
+                                      '┘',
+                                      '┼' -> '|'
+                                      '■' -> '■'
+                                      else -> ' '
+                                  }
+                              }
+                              .joinToString(separator = "")
+                          val down =
+                            line
+                              .map {
+                                  when (it) {
+                                      '|',
+                                      '┌',
+                                      '┐',
+                                      '┼' -> '|'
+                                      '■' -> '■'
+                                      else -> ' '
+                                  }
+                              }
+                              .joinToString(separator = "")
+                          listOf(up, line, down)
+                      }
+                  }
+                  .forEach { println(it) }
             }
         }
 
@@ -329,10 +329,12 @@ class Day10 {
                 val start = Start
             }
 
-
             sealed interface Element
+
             data object Ground : Element
+
             data object Start : Element
+
             sealed interface Pipe : Element {
                 fun turn(direction: Direction): Pair<Direction, Turn>
             }
@@ -402,11 +404,13 @@ class Day10 {
                     }
                 }
             }
-
         }
 
         enum class Direction {
-            NORTH, SOUTH, EAST, WEST;
+            NORTH,
+            SOUTH,
+            EAST,
+            WEST;
 
             fun turn(turn: Turn): Direction {
                 return when (turn) {
@@ -441,15 +445,19 @@ class Day10 {
         }
 
         enum class Turn {
-            NO_TURN, LEFT, RIGHT
+            NO_TURN,
+            LEFT,
+            RIGHT,
         }
 
         class TurnStack {
             private val stack: ArrayDeque<Turn> = ArrayDeque()
+
             fun push(turn: Turn) {
                 return when (turn) {
                     NO_TURN -> Unit
-                    LEFT, RIGHT -> {
+                    LEFT,
+                    RIGHT -> {
                         try {
                             val first = stack.first()
                             if (first == turn) {
@@ -474,44 +482,59 @@ class Day10 {
         }
 
         fun visualize(lines: List<String>) {
-            lines.map { line ->
-                line.map {
-                    when (it) {
-                        '.' -> "     "
-                        '-' -> "—————"
-                        '|' -> "  |  "
-                        'F' -> "  ┌——"
-                        '7' -> "——┐  "
-                        'L' -> "  └——"
-                        'J' -> "——┘  "
-                        'S' -> "——┼——"
-                        else -> throw IllegalArgumentException()
+            lines
+              .map { line ->
+                  line
+                    .map {
+                        when (it) {
+                            '.' -> "     "
+                            '-' -> "—————"
+                            '|' -> "  |  "
+                            'F' -> "  ┌——"
+                            '7' -> "——┐  "
+                            'L' -> "  └——"
+                            'J' -> "——┘  "
+                            'S' -> "——┼——"
+                            else -> throw IllegalArgumentException()
+                        }
                     }
-                }.joinToString(separator = "")
-            }
-                .flatMap { line ->
-                    val up = line.map {
-                        when (it) {
-                            '|', '└', '┘', '┼' -> '|'
-                            else -> ' '
-                        }
-                    }.joinToString(separator = "")
-                    val down = line.map {
-                        when (it) {
-                            '|', '┌', '┐', '┼' -> '|'
-                            else -> ' '
-                        }
-                    }.joinToString(separator = "")
-                    listOf(up, line, down)
-                }
-                .forEach { println(it) }
+                    .joinToString(separator = "")
+              }
+              .flatMap { line ->
+                  val up =
+                    line
+                      .map {
+                          when (it) {
+                              '|',
+                              '└',
+                              '┘',
+                              '┼' -> '|'
+                              else -> ' '
+                          }
+                      }
+                      .joinToString(separator = "")
+                  val down =
+                    line
+                      .map {
+                          when (it) {
+                              '|',
+                              '┌',
+                              '┐',
+                              '┼' -> '|'
+                              else -> ' '
+                          }
+                      }
+                      .joinToString(separator = "")
+                  listOf(up, line, down)
+              }
+              .forEach { println(it) }
         }
     }
 
     fun part1(lines: List<String>): Int {
-//        visualize(lines)
+        //        visualize(lines)
         val layout = parse(lines)
-//        layout.printStartPosition()
+        //        layout.printStartPosition()
         val loopLength = layout.findLoopLength()
         return loopLength / 2
     }
@@ -519,28 +542,28 @@ class Day10 {
     fun part2(lines: List<String>): Int {
         val layout = parse(lines)
         val insideArea = layout.countInside()
-//        layout.visualize(scaleUp = false, paintInsideMainLoop = false)
+        //        layout.visualize(scaleUp = false, paintInsideMainLoop = false)
         layout.visualize(scaleUp = false, paintInsideMainLoop = true)
         return insideArea
     }
 
     private fun parse(lines: List<String>): Layout {
-        return lines.map { line ->
-            line.map {
-                when (it) {
-                    '.' -> ground
-                    '-' -> horizontalPipe
-                    '|' -> verticalPipe
-                    'F' -> bottomRightPipe
-                    '7' -> bottomLeftPipe
-                    'L' -> topRightPipe
-                    'J' -> topLeftPipe
-                    'S' -> start
-                    else -> throw IllegalArgumentException()
-                }
-            }
-        }
-            .let { Layout(it) }
+        return lines
+          .map { line ->
+              line.map {
+                  when (it) {
+                      '.' -> ground
+                      '-' -> horizontalPipe
+                      '|' -> verticalPipe
+                      'F' -> bottomRightPipe
+                      '7' -> bottomLeftPipe
+                      'L' -> topRightPipe
+                      'J' -> topLeftPipe
+                      'S' -> start
+                      else -> throw IllegalArgumentException()
+                  }
+              }
+          }
+          .let { Layout(it) }
     }
-
 }

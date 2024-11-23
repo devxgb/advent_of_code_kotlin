@@ -1,11 +1,10 @@
 package org.example.aoc.year2023.day06
 
+import kotlin.test.assertEquals
 import org.example.common.readTestFile
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 class Day06Test {
-
     private val lines = readTestFile("\\year2023\\day06\\test_input.txt")
     private val day6 = Day6()
 
@@ -21,21 +20,12 @@ class Day06Test {
 
     @Test
     fun parsePart1Test() {
-        assertEquals(
-            listOf(
-                7 to 9,
-                15 to 40,
-                30 to 200
-            ),
-            day6.parsePart1(lines)
-        )
+        assertEquals(listOf(7 to 9, 15 to 40, 30 to 200), day6.parsePart1(lines))
     }
 
     @Test
     fun parsePart2Test() {
-        assertEquals(
-            71530L to 940200L, day6.parsePart2(lines)
-        )
+        assertEquals(71530L to 940200L, day6.parsePart2(lines))
     }
 
     @Test

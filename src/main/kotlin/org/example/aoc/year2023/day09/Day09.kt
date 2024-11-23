@@ -20,50 +20,22 @@ class Day09 {
         return reports.sumOf { predictLeft(it) }
     }
 
-    fun parse(lines: List<String>): List<List<Int>> {
-        return lines.map { line ->
-            line.split(' ').map { it.toInt() }
-        }
-    }
+    fun parse(lines: List<String>): List<List<Int>> = lines.map { line -> line.split(' ').map { it.toInt() } }
 
-    fun predictRight(report: List<Int>): Int {
-        return listOf(report)
-            .extrapolateToZero()
-            .extrapolateRight()
-    }
+    fun predictRight(report: List<Int>): Int = listOf(report).extrapolateToZero().extrapolateRight()
 
-    fun predictLeft(report: List<Int>): Int {
-        return listOf(report)
-            .extrapolateToZero()
-            .extrapolateLeft()
-    }
+    fun predictLeft(report: List<Int>): Int = listOf(report).extrapolateToZero().extrapolateLeft()
 }
 
-fun List<List<Int>>.extrapolateRight(): Int {
-    return this.reversed()
-        .drop(1)
-        .fold(this.last().last()) { acc, list ->
-            acc + list.last()
-        }
-}
+fun List<List<Int>>.extrapolateRight(): Int = this.reversed().drop(1).fold(this.last().last()) { acc, list -> acc + list.last() }
 
-fun List<List<Int>>.extrapolateLeft(): Int {
-    return this.reversed()
-        .drop(1)
-        .fold(this.last().first()) { acc, list ->
-            list.first() - acc
-        }
-}
+fun List<List<Int>>.extrapolateLeft(): Int = this.reversed().drop(1).fold(this.last().first()) { acc, list -> list.first() - acc }
 
-fun List<List<Int>>.extrapolateToZero(): List<List<Int>> {
-    return if (this.last().all { it == 0 }) {
-        this
-    } else {
-        this.plus(element = this.last().difference()).extrapolateToZero()
-    }
-}
+fun List<List<Int>>.extrapolateToZero(): List<List<Int>> =
+  if (this.last().all { it == 0 }) {
+      this
+  } else {
+      this.plus(element = this.last().difference()).extrapolateToZero()
+  }
 
-fun List<Int>.difference(): List<Int> {
-    return this.zipWithNext()
-        .map { (a, b) -> b - a }
-}
+fun List<Int>.difference(): List<Int> = this.zipWithNext().map { (a, b) -> b - a }

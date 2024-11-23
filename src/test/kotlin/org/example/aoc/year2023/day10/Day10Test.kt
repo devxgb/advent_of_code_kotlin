@@ -1,11 +1,10 @@
 package org.example.aoc.year2023.day10
 
+import kotlin.test.assertEquals
 import org.example.common.readTestFile
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 class Day10Test {
-
     private val lines = readTestFile("\\year2023\\day10\\test_input.txt")
     private val day10 = Day10()
 
@@ -16,7 +15,8 @@ class Day10Test {
 
     @Test
     fun part2Test1() {
-        val lines = """
+        val lines =
+          """
             ...........
             .S-------7.
             .|F-----7|.
@@ -27,13 +27,16 @@ class Day10Test {
             .L--J.L--J.
             ...........
 
-        """.trimIndent().split('\n')
+            """
+            .trimIndent()
+            .split('\n')
         assertEquals(4, day10.part2(lines))
     }
 
     @Test
     fun part2Test3() {
-        val lines = """
+        val lines =
+          """
             FF7FSF7F7F7F7F7F---7
             L|LJ||||||||||||F--J
             FL-7LJLJ||||||LJL-77
@@ -45,7 +48,9 @@ class Day10Test {
             L.L7LFJ|||||FJL7||LJ
             L7JLJL-JLJLJL--JLJ.L
 
-        """.trimIndent().split('\n')
+            """
+            .trimIndent()
+            .split('\n')
         assertEquals(10, day10.part2(lines))
     }
 }

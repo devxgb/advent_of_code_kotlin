@@ -1,10 +1,10 @@
 package org.example.aoc.year2022.day2
 
+import kotlin.test.assertEquals
 import org.example.aoc.year2022.day2.RPSGame.ResultPair.*
 import org.example.aoc.year2022.day2.RPSGame.Turn.*
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 internal class RPSGameTest {
 
@@ -27,23 +27,23 @@ internal class RPSGameTest {
         assertEquals(expectedScorePlayer2, rpsGame.scorePlayer2)
     }
 
-    /********** Test Play ***************/
+    /** ******** Test Play ************** */
     @Test
     fun test1() {
-        assertGame(ROCK, PAPER,1,8)
+        assertGame(ROCK, PAPER, 1, 8)
     }
 
     @Test
     fun test2() {
-        assertGame(PAPER, ROCK,8,1)
+        assertGame(PAPER, ROCK, 8, 1)
     }
 
     @Test
     fun test3() {
-        assertGame(SCISSORS, SCISSORS,6,6)
+        assertGame(SCISSORS, SCISSORS, 6, 6)
     }
 
-    /********** Test reverseLookUpPlay ***************/
+    /** ******** Test reverseLookUpPlay ************** */
     @Test
     fun test4() {
         assertGameReverseLookup(ROCK, GAME_DRAW, 4, 4)

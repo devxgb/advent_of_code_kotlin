@@ -1,10 +1,10 @@
 package org.example.aoc.year2023.day07
 
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 import org.example.aoc.year2023.day07.Hand.Companion.sortedWithJokerOrder
 import org.example.aoc.year2023.day07.HandType.*
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class HandTest {
 
@@ -45,40 +45,16 @@ class HandTest {
     @Test
     fun sortingTest() {
         assertEquals(
-            listOf(
-                createHand("32T3K"),
-                createHand("KTJJT"),
-                createHand("KK677"),
-                createHand("T55J5"),
-                createHand("QQQJA")
-            ),
-            listOf(
-                createHand("32T3K"),
-                createHand("T55J5"),
-                createHand("KK677"),
-                createHand("KTJJT"),
-                createHand("QQQJA")
-            ).sorted()
+          listOf(createHand("32T3K"), createHand("KTJJT"), createHand("KK677"), createHand("T55J5"), createHand("QQQJA")),
+          listOf(createHand("32T3K"), createHand("T55J5"), createHand("KK677"), createHand("KTJJT"), createHand("QQQJA")).sorted(),
         )
     }
 
     @Test
     fun sortingJokerTest() {
         assertEquals(
-            listOf(
-                createHand("32T3K"),
-                createHand("KK677"),
-                createHand("T55J5"),
-                createHand("QQQJA"),
-                createHand("KTJJT")
-            ),
-            listOf(
-                createHand("32T3K"),
-                createHand("T55J5"),
-                createHand("KK677"),
-                createHand("KTJJT"),
-                createHand("QQQJA")
-            ).sortedWithJokerOrder()
+          listOf(createHand("32T3K"), createHand("KK677"), createHand("T55J5"), createHand("QQQJA"), createHand("KTJJT")),
+          listOf(createHand("32T3K"), createHand("T55J5"), createHand("KK677"), createHand("KTJJT"), createHand("QQQJA")).sortedWithJokerOrder(),
         )
     }
 }
