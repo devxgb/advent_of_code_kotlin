@@ -1,8 +1,8 @@
 package org.example.aoc.year2024.day1
 
+import kotlin.test.assertEquals
 import org.example.common.readTestFile
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 
 class Day1Test {
 

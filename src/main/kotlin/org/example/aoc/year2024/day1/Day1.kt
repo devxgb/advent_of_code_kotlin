@@ -1,7 +1,7 @@
 package org.example.aoc.year2024.day1
 
-import org.example.common.readFile
 import kotlin.math.absoluteValue
+import org.example.common.readFile
 
 fun main() {
     val lines = readFile("\\year2024\\day1\\input.txt")
@@ -13,7 +13,7 @@ fun main() {
 class Day1 {
     fun part1(lines: List<String>): Int {
         val (inputList1, inputList2) = parse(lines)
-        require(inputList1.size==inputList2.size)
+        require(inputList1.size == inputList2.size)
         val result = inputList1.sorted().zip(inputList2.sorted()) { a, b -> a.minus(b).absoluteValue }.sum()
         return result
     }
