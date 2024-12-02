@@ -3,6 +3,7 @@ package org.example.aoc.year2024.day2
 import kotlin.test.assertEquals
 import kotlin.time.measureTime
 import org.example.common.readTestFile
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class Day2Test {
@@ -69,6 +70,7 @@ class Day2Test {
         assertIsSafeOneLess(true, listOf(1, 3, 6, 7, 9))
     }
 
+    @Disabled("This is Benchmark. This unnecessarily slows down test execution.")
     @Test
     fun isSafeOneLessBruteForceBenchMark() {
         val benchMarkInputList =
