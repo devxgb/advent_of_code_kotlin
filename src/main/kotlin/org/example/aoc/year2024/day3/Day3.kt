@@ -29,12 +29,12 @@ class Day3 {
     fun part2(lines: List<String>): Int {
         val tokenList = Lexer2(lines.joinToString(separator = "\n").asSequence()).getTokenSequence().toList()
         val result =
-            List(6) { index -> tokenList.drop(index).dropLast(5 - index) }
-                .fold(initial = List<List<Token>>(tokenList.size) { emptyList() }) { acc, element -> acc.zip(element) { a, b -> a.plus(b) } }
-                .filter { each -> each.first() is InsMul }
-                .map { each -> Parser(each) }
-                .filter { each -> each.isValid }
-                .sumOf { each -> each.parsedValue() }
+          List(6) { index -> tokenList.drop(index).dropLast(5 - index) }
+            .fold(initial = List<List<Token>>(tokenList.size) { emptyList() }) { acc, element -> acc.zip(element) { a, b -> a.plus(b) } }
+            .filter { each -> each.first() is InsMul }
+            .map { each -> Parser(each) }
+            .filter { each -> each.isValid }
+            .sumOf { each -> each.parsedValue() }
 
         return result
     }
@@ -73,7 +73,7 @@ class Day3 {
 
                     private fun finalize(): Token {
                         require(digits.isNotEmpty())
-                        return if(digits.size<=3) {
+                        return if (digits.size <= 3) {
                             TokenInt(digits.joinToString(separator = ""))
                         } else {
                             TokenBad(digits.joinToString(separator = ""))
@@ -96,9 +96,9 @@ class Day3 {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'u' -> DetectedMU() to emptyList()
-                            nextChar == '(' -> Started() to listOf(TokenBad("m"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("m"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("m"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("m"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("m"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("m"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("m"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("m"))
                             else -> DetectedBadToken.start('m', nextChar) to emptyList()
@@ -110,17 +110,17 @@ class Day3 {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'l' -> Started() to listOf(InsMul())
-                            nextChar == '(' -> Started() to listOf(TokenBad("mu"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("mu"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("mu"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("mu"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("mu"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("mu"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("mu"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("mu"))
-                            else -> DetectedBadToken.start('m','u', nextChar) to emptyList()
+                            else -> DetectedBadToken.start('m', 'u', nextChar) to emptyList()
                         }
                     }
                 }
 
-                private class DetectedBadToken private constructor(private val chars: List<Char>): State {
+                private class DetectedBadToken private constructor(private val chars: List<Char>) : State {
                     companion object {
                         fun start(vararg chars: Char): DetectedBadToken = DetectedBadToken(chars.toList())
                     }
@@ -131,7 +131,7 @@ class Day3 {
 
                     private fun finalize(): Token {
                         require(chars.isNotEmpty())
-                        return    TokenBad(chars.joinToString(separator = ""))
+                        return TokenBad(chars.joinToString(separator = ""))
                     }
 
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
@@ -199,7 +199,7 @@ class Day3 {
 
                     private fun finalize(): Token {
                         require(digits.isNotEmpty())
-                        return if(digits.size<=3) {
+                        return if (digits.size <= 3) {
                             TokenInt(digits.joinToString(separator = ""))
                         } else {
                             TokenBad(digits.joinToString(separator = ""))
@@ -223,9 +223,9 @@ class Day3 {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'u' -> DetectedMU() to emptyList()
-                            nextChar == '(' -> Started() to listOf(TokenBad("m"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("m"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("m"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("m"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("m"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("m"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("m"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("m"))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("m"))
@@ -238,18 +238,18 @@ class Day3 {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'l' -> Started() to listOf(InsMul())
-                            nextChar == '(' -> Started() to listOf(TokenBad("mu"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("mu"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("mu"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("mu"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("mu"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("mu"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("mu"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("mu"))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("mu"))
-                            else -> DetectedBadToken.start('m','u', nextChar) to emptyList()
+                            else -> DetectedBadToken.start('m', 'u', nextChar) to emptyList()
                         }
                     }
                 }
 
-                private class DetectedBadToken private constructor(private val chars: List<Char>): State {
+                private class DetectedBadToken private constructor(private val chars: List<Char>) : State {
                     companion object {
                         fun start(vararg chars: Char): DetectedBadToken = DetectedBadToken(chars.toList())
                     }
@@ -260,7 +260,7 @@ class Day3 {
 
                     private fun finalize(): Token {
                         require(chars.isNotEmpty())
-                        return    TokenBad(chars.joinToString(separator = ""))
+                        return TokenBad(chars.joinToString(separator = ""))
                     }
 
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
@@ -276,13 +276,13 @@ class Day3 {
                     }
                 }
 
-                private class DetectedD: State {
+                private class DetectedD : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'o' -> DetectedDO() to emptyList()
-                            nextChar == '(' -> Started() to listOf(TokenBad("d"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("d"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("d"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("d"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("d"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("d"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("d"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("d"))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("d"))
@@ -290,27 +290,29 @@ class Day3 {
                         }
                     }
                 }
-                private class DetectedDO: State {
+
+                private class DetectedDO : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'n' -> DetectedDON() to emptyList()
-                            nextChar == '(' -> Started() to listOf(TokenBad("do"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("do"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("do"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("do"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("do"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("do"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("do"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("do"))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("do"))
-                            else -> DetectedBadToken.start('d','o', nextChar) to emptyList()
+                            else -> DetectedBadToken.start('d', 'o', nextChar) to emptyList()
                         }
                     }
                 }
-                private class DetectedDON: State {
+
+                private class DetectedDON : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == '\'' -> `DetectedDON'`() to emptyList()
-                            nextChar == '(' -> Started() to listOf(TokenBad("don"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("don"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("don"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("don"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("don"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("don"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("don"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("don"))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("don"))
@@ -318,13 +320,14 @@ class Day3 {
                         }
                     }
                 }
-                private class `DetectedDON'`: State {
+
+                private class `DetectedDON'` : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 't' -> `DetectedDON'T`() to emptyList()
-                            nextChar == '(' -> Started() to listOf(TokenBad("don'"),ParenOpen())
-                            nextChar == ')' -> Started() to listOf(TokenBad("don'"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("don'"),Comma())
+                            nextChar == '(' -> Started() to listOf(TokenBad("don'"), ParenOpen())
+                            nextChar == ')' -> Started() to listOf(TokenBad("don'"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("don'"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("don'"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("don'"))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("don'"))
@@ -332,12 +335,13 @@ class Day3 {
                         }
                     }
                 }
-                private class `DetectedDON'T`: State {
+
+                private class `DetectedDON'T` : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == '(' -> `DetectedDON'T(`() to emptyList()
-                            nextChar == ')' -> Started() to listOf(TokenBad("don't"),ParenClose())
-                            nextChar == ',' -> Started() to listOf(TokenBad("don't"),Comma())
+                            nextChar == ')' -> Started() to listOf(TokenBad("don't"), ParenClose())
+                            nextChar == ',' -> Started() to listOf(TokenBad("don't"), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("don't"))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("don't"))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("don't"))
@@ -345,12 +349,13 @@ class Day3 {
                         }
                     }
                 }
-                private class `DetectedDON'T(`: State {
+
+                private class `DetectedDON'T(` : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
-                            nextChar == '(' -> Started() to listOf(TokenBad("don't("),ParenOpen())
+                            nextChar == '(' -> Started() to listOf(TokenBad("don't("), ParenOpen())
                             nextChar == ')' -> `DetectedDON'T()`() to emptyList()
-                            nextChar == ',' -> Started() to listOf(TokenBad("don't("),Comma())
+                            nextChar == ',' -> Started() to listOf(TokenBad("don't("), Comma())
                             nextChar.isDigit() -> DetectedDigit.start(nextChar) to listOf(TokenBad("don't("))
                             nextChar == 'm' -> DetectedM() to listOf(TokenBad("don't("))
                             nextChar == 'd' -> DetectedD() to listOf(TokenBad("don't"))
@@ -358,7 +363,8 @@ class Day3 {
                         }
                     }
                 }
-                private class `DetectedDON'T()`: State {
+
+                private class `DetectedDON'T()` : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'd' -> `DetectedDON'T()D`() to emptyList()
@@ -366,7 +372,8 @@ class Day3 {
                         }
                     }
                 }
-                private class `DetectedDON'T()D`: State {
+
+                private class `DetectedDON'T()D` : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == 'o' -> `DetectedDON'T()DO`() to emptyList()
@@ -375,7 +382,8 @@ class Day3 {
                         }
                     }
                 }
-                private class `DetectedDON'T()DO`: State {
+
+                private class `DetectedDON'T()DO` : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == '(' -> `DetectedDON'T()DO(`() to emptyList()
@@ -384,7 +392,8 @@ class Day3 {
                         }
                     }
                 }
-                private class `DetectedDON'T()DO(`: State {
+
+                private class `DetectedDON'T()DO(` : State {
                     override fun nextStateAndToken(nextChar: Char): Pair<State, List<Token>> {
                         return when {
                             nextChar == ')' -> Started() to listOf(TokenDontDo())
