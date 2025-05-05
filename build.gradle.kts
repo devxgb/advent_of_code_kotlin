@@ -40,3 +40,5 @@ spotless {
         }
     }
 }
+
+tasks.register("aoc", CreateAOCStarterFile::class)

@@ -11,14 +11,10 @@
 
 
 ## Starter script
-Includes a script which creates .kt files and .txt files for code, test and input in proper folder.
+Includes a gradle task which creates .kt files and .txt files for code, test and input in proper folder.
 
-### Syntax
-```text
-./.scripts/aoc.cmd <year> <day>
-```
-
-### Example
-```shell
-./.scripts/aoc.cmd 2023 11
-```
+1. Run gradle task
+    ```shell
+    ./gradlew aoc
+    ```
+2. Enter year(example: 2024) and day(example: 04) when prompted.
