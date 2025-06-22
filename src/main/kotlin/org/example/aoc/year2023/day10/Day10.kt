@@ -11,10 +11,10 @@ import org.example.aoc.year2023.day10.Day10.Companion.Elements.Companion.topLeft
 import org.example.aoc.year2023.day10.Day10.Companion.Elements.Companion.topRightPipe
 import org.example.aoc.year2023.day10.Day10.Companion.Elements.Companion.verticalPipe
 import org.example.aoc.year2023.day10.Day10.Companion.Turn.*
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2023\\day10\\input.txt")
+    val lines = InputReader().readInput("2023", "10")
     val day10 = Day10()
     println(day10.part1(lines))
     println(day10.part2(lines))

@@ -1,10 +1,10 @@
 package org.example.aoc.year2023.day02
 
 import kotlin.math.max
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2023\\day02\\input.txt")
+    val lines = InputReader().readInput("2023", "02")
     val day2 = Day2()
     println(day2.part1(lines))
     println(day2.part2(lines))

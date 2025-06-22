@@ -1,10 +1,10 @@
 package org.example.aoc.year2024.day1
 
 import kotlin.math.absoluteValue
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2024\\day1\\input.txt")
+    val lines = InputReader().readInput("2024", "1")
     val day1 = Day1()
     println(day1.part1(lines))
     println(day1.part2(lines))

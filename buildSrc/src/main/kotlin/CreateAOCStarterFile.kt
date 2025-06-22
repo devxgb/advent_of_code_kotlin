@@ -20,10 +20,10 @@ open class CreateAOCStarterFile : DefaultTask() {
             text = """
                         package org.example.aoc.year$year.day$day
                         
-                        import org.example.common.readFile
+                        import org.example.common.InputReader
                         
                         fun main() {
-                            val lines = readFile("/year$year/day$day/input.txt")
+                            val lines = InputReader().readInput("$year", "$day")
                             val year${year}Day$day = Year${year}Day$day()
                             println(year${year}Day$day.part1(lines))
                             println(year${year}Day$day.part2(lines))
@@ -53,13 +53,13 @@ open class CreateAOCStarterFile : DefaultTask() {
             text = """
                         package org.example.aoc.year$year.day$day
                         
-                        import org.example.common.readTestFile
-                        import org.junit.jupiter.api.Test
                         import kotlin.test.assertEquals
+                        import org.example.common.InputReader
+                        import org.junit.jupiter.api.Test
                         
                         class Year${year}Day${day}Test {
                         
-                            private val lines = readTestFile("/year$year/day$day/test_input.txt")
+                            private val lines = InputReader().readTestInput("$year", "$day")
                             private val year${year}Day${day} = Year${year}Day${day}()
                         
                             @Test

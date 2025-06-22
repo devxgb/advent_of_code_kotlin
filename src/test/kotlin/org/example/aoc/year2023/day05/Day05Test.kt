@@ -4,11 +4,11 @@ import kotlin.test.assertEquals
 import org.example.aoc.year2023.day05.LongRange.Companion.sortAndMerge
 import org.example.aoc.year2023.day05.RangedMapping.Companion.map
 import org.example.aoc.year2023.day05.RangedMapping.Companion.mapOrSelf
-import org.example.common.readTestFile
+import org.example.common.InputReader
 import org.junit.jupiter.api.Test
 
 class Day05Test {
-    private val lines = readTestFile("\\year2023\\day05\\test_input.txt")
+    private val lines = InputReader().readTestInput("2023", "05")
     private val day5 = Day5()
 
     @Test

@@ -1,12 +1,12 @@
 package org.example.aoc.year2023.day13
 
 import kotlin.test.assertEquals
-import org.example.common.readTestFile
+import org.example.common.InputReader
 import org.junit.jupiter.api.Test
 
 class Day13Test {
 
-    private val lines = readTestFile("\\year2023\\day13\\test_input.txt")
+    private val lines = InputReader().readTestInput("2023", "13")
     private val day13 = Day13()
 
     @Test

@@ -1,9 +1,9 @@
 package org.example.aoc.year2022.day6
 
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val string = readFile("\\year2022\\day6\\input.txt")[0]
+    val string = InputReader().readInput("2022", "6")[0]
 
     /** *** Part1 **** */
     val packetStart = SignalProcessor(4)

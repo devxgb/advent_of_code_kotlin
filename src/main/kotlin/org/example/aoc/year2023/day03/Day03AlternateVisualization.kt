@@ -1,9 +1,9 @@
 package org.example.aoc.year2023.day03
 
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2023\\day03\\input.txt")
+    val lines = InputReader().readInput("2023", "03")
     val day3AlternateVisualization = Day3AlternateVisualization()
     println(day3AlternateVisualization.part1(lines))
     println(day3AlternateVisualization.part2(lines))

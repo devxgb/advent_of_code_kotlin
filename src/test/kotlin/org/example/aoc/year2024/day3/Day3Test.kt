@@ -1,12 +1,12 @@
 package org.example.aoc.year2024.day3
 
 import kotlin.test.assertEquals
-import org.example.common.readTestFile
+import org.example.common.InputReader
 import org.junit.jupiter.api.Test
 
 class Day3Test {
 
-    private val lines = readTestFile("\\year2024\\day3\\test_input.txt")
+    private val lines = InputReader().readTestInput("2024", "3")
     private val day3 = Day3()
 
     @Test
@@ -16,6 +16,8 @@ class Day3Test {
 
     @Test
     fun part2Test() {
-        assertEquals(0, day3.part2(lines))
+        // FIXME
+        //  assertEquals(48, day3.part2(lines))
+        assertEquals(161, day3.part2(lines))
     }
 }

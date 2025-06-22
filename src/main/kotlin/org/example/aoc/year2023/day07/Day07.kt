@@ -3,10 +3,10 @@ package org.example.aoc.year2023.day07
 import kotlin.Comparator
 import org.example.aoc.year2023.day07.Hand.Companion.sortedWithJokerOrder
 import org.example.aoc.year2023.day07.HandType.*
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2023\\day07\\input.txt")
+    val lines = InputReader().readInput("2023", "07")
     val day7 = Day7()
     println(day7.part1(lines))
     println(day7.part2(lines))

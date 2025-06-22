@@ -9,11 +9,11 @@ import org.example.aoc.year2023.day11.Day11.Companion.findEmptyColumns
 import org.example.aoc.year2023.day11.Day11.Companion.findEmptyRows
 import org.example.aoc.year2023.day11.Day11.Companion.getAllTrue
 import org.example.aoc.year2023.day11.Day11.Companion.transpose
-import org.example.common.readTestFile
+import org.example.common.InputReader
 import org.junit.jupiter.api.Test
 
 class Day11Test {
-    private val lines = readTestFile("\\year2023\\day11\\test_input.txt")
+    private val lines = InputReader().readTestInput("2023", "11")
     private val day11 = Day11()
 
     @Test

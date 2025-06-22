@@ -1,9 +1,9 @@
 package org.example.aoc.year2022.day4
 
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2022\\day4\\input.txt")
+    val lines = InputReader().readInput("2022", "4")
     val processedInput = lines.map { input -> input.split(",").map { group -> group.split("-").map { it.toInt() }.let { it[0]..it[1] } }.let { it[0] to it[1] } }
 
     /** ************* Part 1 ************** */

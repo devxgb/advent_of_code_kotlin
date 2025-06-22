@@ -2,13 +2,13 @@ package org.example.aoc.year2024.day2
 
 import kotlin.test.assertEquals
 import kotlin.time.measureTime
-import org.example.common.readTestFile
+import org.example.common.InputReader
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class Day2Test {
 
-    private val testCaseLines = readTestFile("\\year2024\\day2\\test_input.txt")
+    private val testCaseLines = InputReader().readTestInput("2024", "2")
     private val day2 = Day2()
 
     @Test

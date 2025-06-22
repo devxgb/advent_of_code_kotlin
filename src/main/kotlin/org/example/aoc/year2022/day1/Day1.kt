@@ -1,13 +1,13 @@
 package org.example.day1
 
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
     // Question 1
     var maxCalories = 0
     var sum = 0
 
-    val lines = readFile("\\year2022\\day1\\input.txt")
+    val lines = InputReader().readInput("2022", "1")
     var i = 0
     while (true) {
         if (i >= lines.size) {
@@ -31,7 +31,8 @@ fun main() {
 
     /** ******Question2**************** */
     var top3 =
-      readFile("\\day1\\input.txt")
+      InputReader()
+        .readInput("2022", "1")
         .foldRight(MutableList(1) { mutableListOf() }) { str: String, list: MutableList<MutableList<String>> ->
             if (str.isEmpty()) {
                 list.add(mutableListOf())

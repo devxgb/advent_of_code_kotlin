@@ -1,10 +1,10 @@
 package org.example.aoc.year2023.day08
 
 import org.example.aoc.year2023.day08.Instruction.*
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2023\\day08\\input.txt")
+    val lines = InputReader().readInput("2023", "08")
     val day8 = Day8()
     println(day8.part1(lines))
     println(day8.part2(lines))

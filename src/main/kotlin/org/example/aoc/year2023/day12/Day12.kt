@@ -3,10 +3,10 @@ package org.example.aoc.year2023.day12
 import java.util.Comparator.*
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.time.measureTimedValue
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
-    val lines = readFile("\\year2023\\day12\\input.txt")
+    val lines = InputReader().readInput("2023", "12")
     val day12 = Day12()
     println(day12.part1(lines))
     println(day12.part2(lines))

@@ -2,7 +2,7 @@ package org.example.aoc.year2022.day5
 
 import java.util.regex.Pattern
 import org.example.aoc.year2022.day5.ContainerStack.*
-import org.example.common.readFile
+import org.example.common.InputReader
 
 private const val TIMES = "times"
 private const val FROM = "from"
@@ -10,7 +10,7 @@ private const val TO = "to"
 private val pattern = Pattern.compile("move (?<$TIMES>\\d+) from (?<$FROM>\\d+) to (?<$TO>\\d+)") ?: throw RuntimeException("Invalid pattern")
 
 fun main() {
-    val lines = readFile("\\year2022\\day5\\input.txt")
+    val lines = InputReader().readInput("2022", "5")
 
     // println("Container at first :\n$containerStack\n******************")
     val (containerStack1, moves1) = processInput(lines)

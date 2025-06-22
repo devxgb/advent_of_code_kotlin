@@ -2,11 +2,11 @@ package org.example.aoc.year2022.day2
 
 import org.example.aoc.year2022.day2.RPSGame.ResultPair.*
 import org.example.aoc.year2022.day2.RPSGame.Turn.*
-import org.example.common.readFile
+import org.example.common.InputReader
 
 fun main() {
     val rpsGame = RPSGame()
-    val lines = readFile("\\year2022\\day2\\input.txt")
+    val lines = InputReader().readInput("2022", "2")
 
     /** *********** Part 1 ************ */
     lines
