@@ -1,18 +1,18 @@
-package org.example.aoc.year2024.day3
+package org.example.aoc.year2024.day03
 
 import org.example.common.InputReader
 
 fun main() {
     val lines = InputReader().readInput("2024", "3")
-    val day3 = Day3()
-    println(day3.part1(lines))
-    println(day3.part2(lines))
+    val day03 = Day03()
+    println(day03.part1(lines))
+    println(day03.part2(lines))
 }
 
 // TODO Improvements:
 //  Make Lexer more generic
 //  Make Parser work without duplicating list
-class Day3 {
+class Day03 {
     fun part1(lines: List<String>): Int {
         val tokenList = Lexer(lines.joinToString(separator = "\n").asSequence()).getTokenSequence().toList()
         val result =

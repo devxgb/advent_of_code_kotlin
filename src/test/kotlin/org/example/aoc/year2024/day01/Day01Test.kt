@@ -1,21 +1,21 @@
-package org.example.aoc.year2024.day1
+package org.example.aoc.year2024.day01
 
 import kotlin.test.assertEquals
 import org.example.common.InputReader
 import org.junit.jupiter.api.Test
 
-class Day1Test {
+class Day01Test {
 
     private val lines = InputReader().readTestInput("2024", "1")
-    private val day1 = Day1()
+    private val day01 = Day01()
 
     @Test
     fun part1Test() {
-        assertEquals(11, day1.part1(lines))
+        assertEquals(11, day01.part1(lines))
     }
 
     @Test
     fun part2Test() {
-        assertEquals(31, day1.part2(lines))
+        assertEquals(31, day01.part2(lines))
     }
 }

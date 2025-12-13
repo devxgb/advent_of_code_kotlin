@@ -1,4 +1,4 @@
-package org.example.aoc.year2024.day2
+package org.example.aoc.year2024.day02
 
 import kotlin.test.assertEquals
 import kotlin.time.measureTime
@@ -6,26 +6,26 @@ import org.example.common.InputReader
 import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
-class Day2Test {
+class Day02Test {
 
     private val testCaseLines = InputReader().readTestInput("2024", "2")
-    private val day2 = Day2()
+    private val day02 = Day02()
 
     @Test
     fun part1Test() {
-        assertEquals(2, day2.part1(testCaseLines))
+        assertEquals(2, day02.part1(testCaseLines))
     }
 
     @Test
     fun part2Test() {
-        assertEquals(4, day2.part2(testCaseLines))
+        assertEquals(4, day02.part2(testCaseLines))
     }
 
     @Test
     fun isSafeTest() {
         val assertIsSafe =
           fun(expected: Boolean, list: List<Int>) {
-              assertEquals(expected, day2.isSafe(list))
+              assertEquals(expected, day02.isSafe(list))
           }
         assertIsSafe(true, listOf(1, 2, 3, 4))
         assertIsSafe(false, listOf(1, 2, 2, 3))
@@ -42,7 +42,7 @@ class Day2Test {
     fun isSafeOneLessTest() {
         val assertIsSafeOneLess =
           fun(expected: Boolean, list: List<Int>) {
-              assertEquals(expected, day2.isSafeOneLess(list))
+              assertEquals(expected, day02.isSafeOneLess(list))
           }
 
         assertIsSafeOneLess(true, listOf(1, 2, 3, 4, 5))
@@ -82,12 +82,12 @@ class Day2Test {
           )
         val benchMark = BenchMark(warmUpIteration = 1, actualIteration = 10, repeat = 10000)
         println("isSafeOneLess")
-        benchMark.benchMark { benchMarkInputList.forEach { eachInput -> day2.isSafeOneLess(eachInput) } }
+        benchMark.benchMark { benchMarkInputList.forEach { eachInput -> day02.isSafeOneLess(eachInput) } }
         println("isSafeOneLessV2")
-        benchMark.benchMark { benchMarkInputList.forEach { eachInput -> day2.isSafeOneLessV2(eachInput) } }
+        benchMark.benchMark { benchMarkInputList.forEach { eachInput -> day02.isSafeOneLessV2(eachInput) } }
 
         println("isSafeOneLessBruteForce")
-        benchMark.benchMark { benchMarkInputList.forEach { eachInput -> day2.isSafeOneLessBruteForce(eachInput) } }
+        benchMark.benchMark { benchMarkInputList.forEach { eachInput -> day02.isSafeOneLessBruteForce(eachInput) } }
     }
 
     private class BenchMark(private val warmUpIteration: Int, private val actualIteration: Int, private val repeat: Int) {

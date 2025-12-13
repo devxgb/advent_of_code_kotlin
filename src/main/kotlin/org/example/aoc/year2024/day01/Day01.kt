@@ -1,16 +1,16 @@
-package org.example.aoc.year2024.day1
+package org.example.aoc.year2024.day01
 
 import kotlin.math.absoluteValue
 import org.example.common.InputReader
 
 fun main() {
     val lines = InputReader().readInput("2024", "1")
-    val day1 = Day1()
-    println(day1.part1(lines))
-    println(day1.part2(lines))
+    val day01 = Day01()
+    println(day01.part1(lines))
+    println(day01.part2(lines))
 }
 
-class Day1 {
+class Day01 {
     fun part1(lines: List<String>): Int {
         val (inputList1, inputList2) = parse(lines)
         require(inputList1.size == inputList2.size)
