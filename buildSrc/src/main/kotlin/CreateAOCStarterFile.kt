@@ -6,15 +6,19 @@ open class CreateAOCStarterFile : DefaultTask() {
     fun taskAction() {
         print("Enter year: ")
         System.out.flush()
-        val year = readln()
+        val year = readln().toInt()
+        require(year in 2015..2025) { "Year out of range" }
+        val yearString = year.toString()
         print("Enter day: ")
         System.out.flush()
-        val day = readln()
+        val day = readln().toInt()
+        require(day in 1..25) { "Day out of range" }
+        val dayString = "%02d".format(day)
 
         // /src/main/kotlin
         createFile(
-            year = year,
-            day = day,
+            year = yearString,
+            day = dayString,
             pathName = "src/main/kotlin/org/example/aoc",
             fileName = "Year${year}Day$day.kt",
             text = """
@@ -42,12 +46,12 @@ open class CreateAOCStarterFile : DefaultTask() {
         )
 
         // /src/main/resources
-        createFile(year = year, day = day, pathName = "src/main/resources", fileName = "input.txt")
+        createFile(year = yearString, day = dayString, pathName = "src/main/resources/input", fileName = "input.txt")
 
         // /src/test/kotlin
         createFile(
-            year = year,
-            day = day,
+            year = yearString,
+            day = dayString,
             pathName = "src/test/kotlin/org/example/aoc",
             fileName = "Year${year}Day${day}Test.kt",
             text = """
@@ -76,7 +80,7 @@ open class CreateAOCStarterFile : DefaultTask() {
         )
 
         // /src/test/resources
-        createFile(year = year, day = day, pathName = "src/test/resources", fileName = "test_input.txt")
+        createFile(year = yearString, day = dayString, pathName = "src/test/resources/input", fileName = "test_input.txt")
     }
 
     private fun createFile(

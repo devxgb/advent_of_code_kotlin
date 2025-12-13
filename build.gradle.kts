@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "2.0.21"
     id("com.diffplug.spotless") version "7.0.0.BETA4"
+    id("org.example.aoc")
 }
 
 group = "org.example"
@@ -40,5 +41,3 @@ spotless {
         }
     }
 }
-
-tasks.register("aoc", CreateAOCStarterFile::class)
