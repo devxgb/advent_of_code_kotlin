@@ -1,7 +1,15 @@
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 
-open class CreateAOCStarterFile : DefaultTask() {
+open class AOCCreateStarterFile : DefaultTask() {
+
+    companion object {
+        private const val SRC_MAIN_RESOURCES = "src/main/resources"
+        private const val SRC_TEST_RESOURCES = "src/test/resources"
+    }
+
+    private val fileOps: FileOps = FileOps(project, logger)
+
     @TaskAction
     fun taskAction() {
         print("Enter year: ")
@@ -16,7 +24,7 @@ open class CreateAOCStarterFile : DefaultTask() {
         val dayString = "%02d".format(day)
 
         // /src/main/kotlin
-        createFile(
+        fileOps.createFileYearDay(
             year = yearString,
             day = dayString,
             pathName = "src/main/kotlin/org/example/aoc",
@@ -46,10 +54,10 @@ open class CreateAOCStarterFile : DefaultTask() {
         )
 
         // /src/main/resources
-        createFile(year = yearString, day = dayString, pathName = "src/main/resources/input", fileName = "input.txt")
+        fileOps.createFileYearDay(year = yearString, day = dayString, pathName = "$SRC_MAIN_RESOURCES/input", fileName = "input.txt")
 
         // /src/test/kotlin
-        createFile(
+        fileOps.createFileYearDay(
             year = yearString,
             day = dayString,
             pathName = "src/test/kotlin/org/example/aoc",
@@ -80,20 +88,46 @@ open class CreateAOCStarterFile : DefaultTask() {
         )
 
         // /src/test/resources
-        createFile(year = yearString, day = dayString, pathName = "src/test/resources/input", fileName = "test_input.txt")
+        fileOps.createFileYearDay(year = yearString, day = dayString, pathName = "$SRC_MAIN_RESOURCES/input", fileName = "test_input.txt")
+
+        // /src/main/resources/YearDay.csv
+        addToYearDayCSV(year = yearString, day = dayString)
+
+        // info
+        logger.quiet("Get input form: https://adventofcode.com/$year/day/$day/input")
     }
 
-    private fun createFile(
-        year: String,
-        day: String,
-        pathName: String,
-        fileName: String,
-        text: String? = null
-    ) {
-        val srcMainKotlinDir = project.layout.projectDirectory.dir(pathName).dir("year$year").dir("day$day")
-        project.mkdir(srcMainKotlinDir)
-        val srcMainKotlinFile = srcMainKotlinDir.file(fileName).asFile
-        srcMainKotlinFile.createNewFile()
-        text?.let { srcMainKotlinFile.writeText(it) }
+    data class YearDay(val year: String, val day: String): Comparable<YearDay> {
+        companion object {
+            private val comparator: Comparator<YearDay> = Comparator.comparing<YearDay, String> { (year, _) -> year }.thenComparing { (_, day) -> day }
+        }
+        override fun compareTo(other: YearDay): Int = comparator.compare(this, other)
+    }
+
+    private fun addToYearDayCSV(year: String, day: String) {
+        val csvFileName = "YearDay.csv"
+        val csv = fileOps.readFileLines(pathName = SRC_MAIN_RESOURCES, fileName = csvFileName)
+        val header = csv.take(1)
+        val existingRows = csv.drop(1)
+        val updatedRows = existingRows
+            .map { line ->
+                val split = line.split(",")
+                require(split.size == 2)
+                YearDay(split[0], split[1])
+            }
+            .toSet()
+            .plus(YearDay(year = year, day = day))
+            .sorted()
+            .map { (year, day) -> "$year,$day" }
+        if(existingRows == updatedRows) {
+            logger.info("No update to src/main/resources/YearDay.csv")
+        } else {
+            logger.info("Updating src/main/resources/YearDay.csv")
+            fileOps.writeLinesToFile(
+                pathName = SRC_MAIN_RESOURCES,
+                fileName = csvFileName,
+                lines = header+updatedRows
+            )
+        }
     }
 }
