@@ -11,11 +11,11 @@ class Year2025Day01Test {
 
     @Test
     fun part1Test() {
-        assertEquals(0, year2025Day01.part1(lines))
+        assertEquals(3, year2025Day01.part1(lines))
     }
 
     @Test
     fun part2Test() {
-        assertEquals(0, year2025Day01.part2(lines))
+        assertEquals(6, year2025Day01.part2(lines))
     }
 }
