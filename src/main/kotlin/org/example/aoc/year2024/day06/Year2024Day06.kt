@@ -97,7 +97,7 @@ class Year2024Day06 {
             }
 
             fun markIsVisited(position: Position, direction: Direction) {
-                if(visitedDirection[position.row][position.col]==null) {
+                if (visitedDirection[position.row][position.col] == null) {
                     visitedDirection[position.row][position.col] = direction
                 }
             }

@@ -51,7 +51,7 @@ class Year2024Day06Test {
                 "..#.", //
               ),
               Position(2, 1),
-                UP,
+              UP,
             ),
             Triple(
               listOf(
@@ -61,7 +61,7 @@ class Year2024Day06Test {
                 "..#.", //
               ),
               Position(2, 1),
-                UP,
+              UP,
             ),
             Triple(
               listOf(
@@ -75,7 +75,7 @@ class Year2024Day06Test {
                 "......#.", //
               ),
               Position(3, 3),
-                UP,
+              UP,
             ),
           )
         testCases.forEach { (obstacle, guardInitialPosition, guardInitialDirection) ->
